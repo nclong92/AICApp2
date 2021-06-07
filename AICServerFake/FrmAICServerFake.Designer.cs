@@ -82,6 +82,7 @@ namespace AICServerFake
             this.lvLichSu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvLichSu.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
+            this.lvLichSu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvLichSu.HideSelection = false;
             this.lvLichSu.Location = new System.Drawing.Point(22, 157);
             this.lvLichSu.Name = "lvLichSu";
@@ -98,10 +99,10 @@ namespace AICServerFake
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(19, 131);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 20);
+            this.label2.Size = new System.Drawing.Size(66, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Lịch sử";
             // 
