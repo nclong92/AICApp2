@@ -31,10 +31,7 @@ namespace AICListener
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAICListener));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lvLichSu = new System.Windows.Forms.ListView();
-            this.colHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.btnXuatExcel = new System.Windows.Forms.Button();
             this.lblTrangThai = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,15 +41,24 @@ namespace AICListener
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tabListener = new System.Windows.Forms.TabControl();
+            this.tabDanhSachDangKy = new System.Windows.Forms.TabPage();
+            this.tabLichSu = new System.Windows.Forms.TabPage();
+            this.lvLichSu = new System.Windows.Forms.ListView();
+            this.colHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvDanhSachDangKy = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabListener.SuspendLayout();
+            this.tabDanhSachDangKy.SuspendLayout();
+            this.tabLichSu.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lvLichSu);
+            this.groupBox1.Controls.Add(this.tabListener);
             this.groupBox1.Controls.Add(this.txtSearch);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btnXuatExcel);
             this.groupBox1.Controls.Add(this.lblTrangThai);
             this.groupBox1.Controls.Add(this.label3);
@@ -62,51 +68,24 @@ namespace AICListener
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(743, 474);
+            this.groupBox1.Size = new System.Drawing.Size(856, 632);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
-            // lvLichSu
-            // 
-            this.lvLichSu.Alignment = System.Windows.Forms.ListViewAlignment.Default;
-            this.lvLichSu.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colHeader});
-            this.lvLichSu.HideSelection = false;
-            this.lvLichSu.Location = new System.Drawing.Point(20, 186);
-            this.lvLichSu.Name = "lvLichSu";
-            this.lvLichSu.Size = new System.Drawing.Size(717, 282);
-            this.lvLichSu.TabIndex = 13;
-            this.lvLichSu.UseCompatibleStateImageBehavior = false;
-            this.lvLichSu.View = System.Windows.Forms.View.Details;
-            // 
-            // colHeader
-            // 
-            this.colHeader.Text = "Chi tiết";
-            this.colHeader.Width = 713;
-            // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(584, 160);
+            this.txtSearch.Location = new System.Drawing.Point(694, 161);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(153, 20);
             this.txtSearch.TabIndex = 12;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(16, 156);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 24);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Lịch sử";
-            // 
             // btnXuatExcel
             // 
-            this.btnXuatExcel.Location = new System.Drawing.Point(478, 158);
+            this.btnXuatExcel.Location = new System.Drawing.Point(588, 159);
             this.btnXuatExcel.Name = "btnXuatExcel";
             this.btnXuatExcel.Size = new System.Drawing.Size(100, 23);
             this.btnXuatExcel.TabIndex = 10;
@@ -117,7 +96,7 @@ namespace AICListener
             // lblTrangThai
             // 
             this.lblTrangThai.AutoSize = true;
-            this.lblTrangThai.Location = new System.Drawing.Point(171, 130);
+            this.lblTrangThai.Location = new System.Drawing.Point(155, 129);
             this.lblTrangThai.Name = "lblTrangThai";
             this.lblTrangThai.Size = new System.Drawing.Size(61, 13);
             this.lblTrangThai.TabIndex = 9;
@@ -126,7 +105,7 @@ namespace AICListener
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(97, 130);
+            this.label3.Location = new System.Drawing.Point(81, 129);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 8;
@@ -188,11 +167,83 @@ namespace AICListener
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // tabListener
+            // 
+            this.tabListener.Controls.Add(this.tabDanhSachDangKy);
+            this.tabListener.Controls.Add(this.tabLichSu);
+            this.tabListener.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabListener.Location = new System.Drawing.Point(20, 187);
+            this.tabListener.Name = "tabListener";
+            this.tabListener.SelectedIndex = 0;
+            this.tabListener.Size = new System.Drawing.Size(827, 438);
+            this.tabListener.TabIndex = 14;
+            this.tabListener.Tag = "";
+            this.tabListener.SelectedIndexChanged += new System.EventHandler(this.tabListener_SelectedIndexChanged);
+            // 
+            // tabDanhSachDangKy
+            // 
+            this.tabDanhSachDangKy.Controls.Add(this.lvDanhSachDangKy);
+            this.tabDanhSachDangKy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabDanhSachDangKy.Location = new System.Drawing.Point(4, 29);
+            this.tabDanhSachDangKy.Name = "tabDanhSachDangKy";
+            this.tabDanhSachDangKy.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDanhSachDangKy.Size = new System.Drawing.Size(819, 405);
+            this.tabDanhSachDangKy.TabIndex = 0;
+            this.tabDanhSachDangKy.Text = "Danh sách đăng ký";
+            this.tabDanhSachDangKy.UseVisualStyleBackColor = true;
+            // 
+            // tabLichSu
+            // 
+            this.tabLichSu.Controls.Add(this.lvLichSu);
+            this.tabLichSu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabLichSu.Location = new System.Drawing.Point(4, 29);
+            this.tabLichSu.Name = "tabLichSu";
+            this.tabLichSu.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLichSu.Size = new System.Drawing.Size(819, 399);
+            this.tabLichSu.TabIndex = 1;
+            this.tabLichSu.Text = "Lịch sử";
+            this.tabLichSu.UseVisualStyleBackColor = true;
+            // 
+            // lvLichSu
+            // 
+            this.lvLichSu.Alignment = System.Windows.Forms.ListViewAlignment.Default;
+            this.lvLichSu.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colHeader});
+            this.lvLichSu.HideSelection = false;
+            this.lvLichSu.Location = new System.Drawing.Point(6, 6);
+            this.lvLichSu.Name = "lvLichSu";
+            this.lvLichSu.Size = new System.Drawing.Size(807, 394);
+            this.lvLichSu.TabIndex = 15;
+            this.lvLichSu.UseCompatibleStateImageBehavior = false;
+            this.lvLichSu.View = System.Windows.Forms.View.Details;
+            // 
+            // colHeader
+            // 
+            this.colHeader.Text = "Chi tiết";
+            this.colHeader.Width = 799;
+            // 
+            // lvDanhSachDangKy
+            // 
+            this.lvDanhSachDangKy.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvDanhSachDangKy.HideSelection = false;
+            this.lvDanhSachDangKy.Location = new System.Drawing.Point(4, 7);
+            this.lvDanhSachDangKy.Name = "lvDanhSachDangKy";
+            this.lvDanhSachDangKy.Size = new System.Drawing.Size(809, 392);
+            this.lvDanhSachDangKy.TabIndex = 0;
+            this.lvDanhSachDangKy.UseCompatibleStateImageBehavior = false;
+            this.lvDanhSachDangKy.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Danh sách đăng ký";
+            this.columnHeader1.Width = 803;
+            // 
             // FrmAICListener
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(762, 494);
+            this.ClientSize = new System.Drawing.Size(875, 651);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -202,6 +253,9 @@ namespace AICListener
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabListener.ResumeLayout(false);
+            this.tabDanhSachDangKy.ResumeLayout(false);
+            this.tabLichSu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -209,10 +263,7 @@ namespace AICListener
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView lvLichSu;
-        private System.Windows.Forms.ColumnHeader colHeader;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnXuatExcel;
         private System.Windows.Forms.Label lblTrangThai;
         private System.Windows.Forms.Label label3;
@@ -222,6 +273,13 @@ namespace AICListener
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TabControl tabListener;
+        private System.Windows.Forms.TabPage tabDanhSachDangKy;
+        private System.Windows.Forms.TabPage tabLichSu;
+        private System.Windows.Forms.ListView lvLichSu;
+        private System.Windows.Forms.ColumnHeader colHeader;
+        private System.Windows.Forms.ListView lvDanhSachDangKy;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
 

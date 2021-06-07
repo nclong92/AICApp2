@@ -1,5 +1,6 @@
 ﻿using AICListener.Code;
 using ApplicationCore.Code;
+using ApplicationCore.Code.Extensions;
 using ApplicationCore.Models;
 using Microsoft.AspNet.SignalR.Client;
 using System;
@@ -21,6 +22,7 @@ namespace AICListener
         IHubProxy _hubProxy;
 
         static List<string> _serverLogs = new List<string>();
+        static List<string> _danhSachDangKys = new List<string>();
 
         public log4net.ILog _log;
 
@@ -41,9 +43,13 @@ namespace AICListener
 
             //await _hubProxy.Invoke("SendObj", new ObjMessage() { });
 
-            _hubProxy.On<string, string>("AddObjMessage", (name, message) =>
+            _hubProxy.On<string, ObjMessage>("AddObjMessage", (name, objmessage) =>
             {
-                writeToLog(message);
+                var message = $"{objmessage.SoGhe} - {objmessage.TrangThai.ToDisplayName()}";
+                var trangthai = objmessage.TrangThai;
+                var soGhe = objmessage.SoGhe;
+
+                writeToLog(message, trangthai, soGhe);
                 _log.Info($"{name}: {message}");
             });
 
@@ -107,37 +113,59 @@ namespace AICListener
             }
         }
 
-        private void writeToLog(string log)
+        private void writeToLog(string log, LoaiTrangThai trangthai, string soGhe)
         {
             if (this.InvokeRequired)
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    var logDisplay = $"{DateTime.Now} - {log}";
-                    _serverLogs.Add(logDisplay);
-
-                    string[] row = { logDisplay };
-                    var listViewItem = new ListViewItem(row);
-                    lvLichSu.Items.Add(listViewItem);
+                    temp_writeToLog(log, trangthai, soGhe);
                 }));
             }
             else
             {
-                var logDisplay = $"{DateTime.Now} - {log}";
-                _serverLogs.Add(logDisplay);
-
-                string[] row = { logDisplay };
-                var listViewItem = new ListViewItem(row);
-                lvLichSu.Items.Add(listViewItem);
+                temp_writeToLog(log, trangthai, soGhe);
             }
 
             lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
             lvLichSu.Update();
+
+            lvDanhSachDangKy.EnsureVisible(lvDanhSachDangKy.Items.Count - 1);
+            lvDanhSachDangKy.Update();
+        }
+
+        private void temp_writeToLog(string log, LoaiTrangThai trangthai, string soGhe)
+        {
+            var logDisplay = $"{DateTime.Now} - {log}";
+            _serverLogs.Add(logDisplay);
+
+            if (trangthai == LoaiTrangThai.DangKy)
+            {
+                if (!_danhSachDangKys.Contains(soGhe))
+                {
+                    _danhSachDangKys.Add(soGhe);
+                }
+            }
+            else if (trangthai == LoaiTrangThai.Huy)
+            {
+                if (_danhSachDangKys.Contains(soGhe))
+                {
+                    _danhSachDangKys.Remove(soGhe);
+                }
+            }
+
+            RefreshAllDanhSachDangKy();
+
+            string[] row = { logDisplay };
+            var listViewItem = new ListViewItem(row);
+            lvLichSu.Items.Add(listViewItem);
         }
 
         private void FrmAICListener_Load(object sender, EventArgs e)
         {
             txtServerAIC.Text = SettingsExtensions.GetValue("AICServerName");
+            btnXuatExcel.Hide();
+            txtSearch.Hide();
         }
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
@@ -216,6 +244,40 @@ namespace AICListener
                 string[] row = { item };
                 var listViewItem = new ListViewItem(row);
                 lvLichSu.Items.Add(listViewItem);
+            }
+        }
+
+        private void RemoveAllDanhSachDangKy()
+        {
+            foreach (ListViewItem item in lvDanhSachDangKy.Items)
+            {
+                lvDanhSachDangKy.Items.Remove(item);
+            }
+        }
+
+        private void RefreshAllDanhSachDangKy()
+        {
+            RemoveAllDanhSachDangKy();
+
+            foreach (var item in _danhSachDangKys)
+            {
+                string[] row = { $"{item} - {LoaiTrangThai.DangKy.ToDisplayName()}" };
+                var listViewItem = new ListViewItem(row);
+                lvDanhSachDangKy.Items.Add(listViewItem);
+            }
+        }
+
+        private void tabListener_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabListener.SelectedIndex == 0)
+            {
+                btnXuatExcel.Hide();
+                txtSearch.Hide();
+            }
+            else
+            {
+                btnXuatExcel.Show();
+                txtSearch.Show();
             }
         }
     }

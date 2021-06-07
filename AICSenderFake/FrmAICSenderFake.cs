@@ -37,7 +37,7 @@ namespace AICSenderFake
 
             _hubProxy = _signalRConnection.CreateHubProxy("ServerHub");
 
-            _hubProxy.On<string, string>("AddObjMessage", (name, message) =>
+            _hubProxy.On<string, ObjMessage>("AddObjMessage", (name, objmessage) =>
             {
                 // LongNC TODO: write log when it need
 

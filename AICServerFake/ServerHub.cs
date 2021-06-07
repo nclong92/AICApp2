@@ -14,7 +14,8 @@ namespace AICServerFake
     public delegate void ClientConnectionEventHandler(string clientId);
     public delegate void ClientNameChangedEventHandler(string clientId, string newName);
 
-    public delegate void ObjReceivedEventHandler(string senderClientId, string obj);
+    //public delegate void ObjReceivedEventHandler(string senderClientId, string obj);
+    public delegate void ObjReceivedEventHandler(string senderClientId, ObjMessage obj);
 
     public class ServerHub : Hub
     {
@@ -62,20 +63,20 @@ namespace AICServerFake
 
         public void Send(string message)
         {
-            Clients.All.AddMessage(_users[Context.ConnectionId], message);
-            ObjReceived?.Invoke(Context.ConnectionId, message);
+            //Clients.All.AddMessage(_users[Context.ConnectionId], message);
+            //ObjReceived?.Invoke(Context.ConnectionId, message);
         }
 
         public void SendObj(string objJson)
         {
             var objMessage = JsonConvert.DeserializeObject<ObjMessage>(objJson);
-            var messageToSend = $"{objMessage.SoGhe} - {objMessage.TrangThai.ToDisplayName()}";
+            //var messageToSend = $"{objMessage.SoGhe} - {objMessage.TrangThai.ToDisplayName()}";
 
             //Clients.All.AddObjMessage(_users[Context.ConnectionId], messageToSend);
-            ObjReceived?.Invoke(Context.ConnectionId, messageToSend);
+            ObjReceived?.Invoke(Context.ConnectionId, objMessage);
 
             var aicListener = _users.FirstOrDefault(m => m.Value == "AICListener");
-            Clients.Client((string)aicListener.Key).AddObjMessage(_users[Context.ConnectionId], messageToSend);
+            Clients.Client((string)aicListener.Key).AddObjMessage(_users[Context.ConnectionId], objMessage);
             
         }
         #endregion

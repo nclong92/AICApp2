@@ -1,4 +1,6 @@
 ﻿using AICServerFake.Code;
+using ApplicationCore.Code.Extensions;
+using ApplicationCore.Models;
 using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
@@ -35,12 +37,14 @@ namespace AICServerFake
             ServerHub.ObjReceived += ServerHub_ObjReceived;
         }
 
-        private void ServerHub_ObjReceived(string senderClientId, string obj)
+        private void ServerHub_ObjReceived(string senderClientId, ObjMessage obj)
         {
             this.BeginInvoke(new Action(() =>
             {
-                _log.Info($"{obj}");
-                writeToLog($"{obj}");
+                var message = $"{obj.SoGhe} - {obj.TrangThai.ToDisplayName()}";
+
+                _log.Info($"{message}");
+                writeToLog($"{message}");
             }));
         }
 
