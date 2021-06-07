@@ -70,9 +70,8 @@ namespace AICSenderFake
             this.lblTrangThai.AutoSize = true;
             this.lblTrangThai.Location = new System.Drawing.Point(171, 135);
             this.lblTrangThai.Name = "lblTrangThai";
-            this.lblTrangThai.Size = new System.Drawing.Size(61, 13);
+            this.lblTrangThai.Size = new System.Drawing.Size(0, 13);
             this.lblTrangThai.TabIndex = 7;
-            this.lblTrangThai.Text = "Chờ kết nối";
             // 
             // label3
             // 

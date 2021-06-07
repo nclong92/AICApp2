@@ -68,7 +68,7 @@ namespace AICListener
             }
             catch (Exception ex)
             {
-                lblTrangThai.Text = "Lỗi kết nối";
+                //lblTrangThai.Text = "Lỗi kết nối";
                 btnKetNoi.Enabled = true;
                 txtServerAIC.Enabled = true;
                 _log.Error($"{ex.Message}");
@@ -107,7 +107,7 @@ namespace AICListener
                 txtServerAIC.Enabled = true;
                 btnHuy.Enabled = false;
 
-                lblTrangThai.Text = "Chờ kết nối";
+                //lblTrangThai.Text = "Chờ kết nối";
 
                 _log.Info($"Disconnected");
             }

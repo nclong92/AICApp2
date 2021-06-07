@@ -128,6 +128,8 @@ namespace AICServerFake
                     string[] row = { logDisplay };
                     var listViewItem = new ListViewItem(row);
                     lvLichSu.Items.Add(listViewItem);
+                    lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
+                    lvLichSu.Update();
                 }));
             }
             else
@@ -138,10 +140,10 @@ namespace AICServerFake
                 string[] row = { logDisplay };
                 var listViewItem = new ListViewItem(row);
                 lvLichSu.Items.Add(listViewItem);
+                lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
+                lvLichSu.Update();
             }
 
-            lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
-            lvLichSu.Update();
         }
 
         private void btnDung_Click(object sender, EventArgs e)

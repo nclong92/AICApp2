@@ -59,7 +59,6 @@ namespace AICSenderFake
             }
             catch (Exception ex)
             {
-                lblTrangThai.Text = "Lỗi kết nối";
                 btnKetNoi.Enabled = true;
                 txtServerAIC.Enabled = true;
                 _log.Error($"{ex.Message}");
@@ -98,7 +97,6 @@ namespace AICSenderFake
                 txtServerAIC.Enabled = true;
                 btnHuy.Enabled = false;
 
-                lblTrangThai.Text = "Chờ kết nối";
                 grpSend.Enabled = false;
 
                 _log.Info($"Disconnected");
