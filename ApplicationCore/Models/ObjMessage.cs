@@ -23,4 +23,28 @@ namespace ApplicationCore.Models
         [Display(Name = "Ngẫu nhiên")]
         NgauNhien = 3
     }
+
+    public enum ClientStatus
+    {
+        [Display(Name = "Chờ kết nối")]
+        ChoKetNoi = 0,
+        [Display(Name = "Đã kết nối")]
+        DaKetNoi = 1,
+        [Display(Name = "Đang kết nối")]
+        DangKetNoi = 2,
+        [Display(Name = "Lỗi kết nối")]
+        LoiKetNoi = 3
+    }
+
+    public enum ServerStatus
+    {
+        [Display(Name = "Đang chờ")]
+        DangCho = 0,
+        [Display(Name = "Đã khởi động")]
+        DaKhoiDong = 1,
+        [Display(Name = "Đang khởi động")]
+        DangKhoiDong = 2,
+        [Display(Name = "Lỗi khởi động")]
+        LoiKhoiDong = 3
+    }
 }

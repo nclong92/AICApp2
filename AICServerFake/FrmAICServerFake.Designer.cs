@@ -64,9 +64,8 @@ namespace AICServerFake
             this.lblTrangThai.AutoSize = true;
             this.lblTrangThai.Location = new System.Drawing.Point(87, 88);
             this.lblTrangThai.Name = "lblTrangThai";
-            this.lblTrangThai.Size = new System.Drawing.Size(54, 13);
+            this.lblTrangThai.Size = new System.Drawing.Size(0, 13);
             this.lblTrangThai.TabIndex = 7;
-            this.lblTrangThai.Text = "Đang chờ";
             // 
             // label3
             // 

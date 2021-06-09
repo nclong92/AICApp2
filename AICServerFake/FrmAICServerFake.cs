@@ -91,7 +91,7 @@ namespace AICServerFake
 
         private void btnKhoiDong_Click(object sender, EventArgs e)
         {
-            lblTrangThai.Text = "Đang khởi động";
+            lblTrangThai.Text = ServerStatus.DangKhoiDong.ToDisplayName();
 
             try
             {
@@ -101,7 +101,7 @@ namespace AICServerFake
                 txtUrl.Enabled = false;
                 btnDung.Enabled = true;
 
-                lblTrangThai.Text = "Đã khởi động";
+                lblTrangThai.Text = ServerStatus.DaKhoiDong.ToDisplayName();
 
                 _log.Info($"Server started at: {txtUrl.Text}");
                 writeToLog($"Server started at: {txtUrl.Text}");
@@ -110,7 +110,7 @@ namespace AICServerFake
             }
             catch (Exception ex)
             {
-                lblTrangThai.Text = "Lỗi kết nối";
+                lblTrangThai.Text = ServerStatus.LoiKhoiDong.ToDisplayName();
                 _log.Error($"txtKetNoi_Click -> {ex.Message}");
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -161,7 +161,7 @@ namespace AICServerFake
                 btnKhoiDong.Enabled = true;
                 txtUrl.Enabled = true;
 
-                lblTrangThai.Text = "Chờ kết nối";
+                lblTrangThai.Text = ServerStatus.LoiKhoiDong.ToDisplayName();
 
                 _log.Info("Server stopped");
                 writeToLog("Server stopped");
@@ -171,6 +171,7 @@ namespace AICServerFake
         private void FrmAICServerFake_Load(object sender, EventArgs e)
         {
             txtUrl.Text = SettingsExtensions.GetValue("AICServerName");
+            lblTrangThai.Text = ServerStatus.DangCho.ToDisplayName();
         }
     }
 }

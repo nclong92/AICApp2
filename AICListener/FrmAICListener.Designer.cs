@@ -31,6 +31,13 @@ namespace AICListener
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAICListener));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tabListener = new System.Windows.Forms.TabControl();
+            this.tabDanhSachDangKy = new System.Windows.Forms.TabPage();
+            this.lvDanhSachDangKy = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabLichSu = new System.Windows.Forms.TabPage();
+            this.lvLichSu = new System.Windows.Forms.ListView();
+            this.colHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnXuatExcel = new System.Windows.Forms.Button();
             this.lblTrangThai = new System.Windows.Forms.Label();
@@ -41,18 +48,11 @@ namespace AICListener
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.tabListener = new System.Windows.Forms.TabControl();
-            this.tabDanhSachDangKy = new System.Windows.Forms.TabPage();
-            this.tabLichSu = new System.Windows.Forms.TabPage();
-            this.lvLichSu = new System.Windows.Forms.ListView();
-            this.colHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvDanhSachDangKy = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabListener.SuspendLayout();
             this.tabDanhSachDangKy.SuspendLayout();
             this.tabLichSu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -74,6 +74,78 @@ namespace AICListener
             this.groupBox1.Size = new System.Drawing.Size(856, 632);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
+            // 
+            // tabListener
+            // 
+            this.tabListener.Controls.Add(this.tabDanhSachDangKy);
+            this.tabListener.Controls.Add(this.tabLichSu);
+            this.tabListener.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabListener.Location = new System.Drawing.Point(20, 187);
+            this.tabListener.Name = "tabListener";
+            this.tabListener.SelectedIndex = 0;
+            this.tabListener.Size = new System.Drawing.Size(827, 438);
+            this.tabListener.TabIndex = 14;
+            this.tabListener.Tag = "";
+            this.tabListener.SelectedIndexChanged += new System.EventHandler(this.tabListener_SelectedIndexChanged);
+            // 
+            // tabDanhSachDangKy
+            // 
+            this.tabDanhSachDangKy.Controls.Add(this.lvDanhSachDangKy);
+            this.tabDanhSachDangKy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabDanhSachDangKy.Location = new System.Drawing.Point(4, 29);
+            this.tabDanhSachDangKy.Name = "tabDanhSachDangKy";
+            this.tabDanhSachDangKy.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDanhSachDangKy.Size = new System.Drawing.Size(819, 405);
+            this.tabDanhSachDangKy.TabIndex = 0;
+            this.tabDanhSachDangKy.Text = "Danh sách đăng ký";
+            this.tabDanhSachDangKy.UseVisualStyleBackColor = true;
+            // 
+            // lvDanhSachDangKy
+            // 
+            this.lvDanhSachDangKy.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvDanhSachDangKy.HideSelection = false;
+            this.lvDanhSachDangKy.Location = new System.Drawing.Point(4, 7);
+            this.lvDanhSachDangKy.Name = "lvDanhSachDangKy";
+            this.lvDanhSachDangKy.Size = new System.Drawing.Size(809, 392);
+            this.lvDanhSachDangKy.TabIndex = 0;
+            this.lvDanhSachDangKy.UseCompatibleStateImageBehavior = false;
+            this.lvDanhSachDangKy.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Danh sách đăng ký";
+            this.columnHeader1.Width = 803;
+            // 
+            // tabLichSu
+            // 
+            this.tabLichSu.Controls.Add(this.lvLichSu);
+            this.tabLichSu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabLichSu.Location = new System.Drawing.Point(4, 29);
+            this.tabLichSu.Name = "tabLichSu";
+            this.tabLichSu.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLichSu.Size = new System.Drawing.Size(819, 405);
+            this.tabLichSu.TabIndex = 1;
+            this.tabLichSu.Text = "Lịch sử";
+            this.tabLichSu.UseVisualStyleBackColor = true;
+            // 
+            // lvLichSu
+            // 
+            this.lvLichSu.Alignment = System.Windows.Forms.ListViewAlignment.Default;
+            this.lvLichSu.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colHeader});
+            this.lvLichSu.HideSelection = false;
+            this.lvLichSu.Location = new System.Drawing.Point(6, 6);
+            this.lvLichSu.Name = "lvLichSu";
+            this.lvLichSu.Size = new System.Drawing.Size(807, 394);
+            this.lvLichSu.TabIndex = 15;
+            this.lvLichSu.UseCompatibleStateImageBehavior = false;
+            this.lvLichSu.View = System.Windows.Forms.View.Details;
+            // 
+            // colHeader
+            // 
+            this.colHeader.Text = "Chi tiết";
+            this.colHeader.Width = 799;
             // 
             // txtSearch
             // 
@@ -98,9 +170,8 @@ namespace AICListener
             this.lblTrangThai.AutoSize = true;
             this.lblTrangThai.Location = new System.Drawing.Point(155, 129);
             this.lblTrangThai.Name = "lblTrangThai";
-            this.lblTrangThai.Size = new System.Drawing.Size(61, 13);
+            this.lblTrangThai.Size = new System.Drawing.Size(0, 13);
             this.lblTrangThai.TabIndex = 9;
-            this.lblTrangThai.Text = "Chờ kết nối";
             // 
             // label3
             // 
@@ -167,78 +238,6 @@ namespace AICListener
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
-            // tabListener
-            // 
-            this.tabListener.Controls.Add(this.tabDanhSachDangKy);
-            this.tabListener.Controls.Add(this.tabLichSu);
-            this.tabListener.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabListener.Location = new System.Drawing.Point(20, 187);
-            this.tabListener.Name = "tabListener";
-            this.tabListener.SelectedIndex = 0;
-            this.tabListener.Size = new System.Drawing.Size(827, 438);
-            this.tabListener.TabIndex = 14;
-            this.tabListener.Tag = "";
-            this.tabListener.SelectedIndexChanged += new System.EventHandler(this.tabListener_SelectedIndexChanged);
-            // 
-            // tabDanhSachDangKy
-            // 
-            this.tabDanhSachDangKy.Controls.Add(this.lvDanhSachDangKy);
-            this.tabDanhSachDangKy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabDanhSachDangKy.Location = new System.Drawing.Point(4, 29);
-            this.tabDanhSachDangKy.Name = "tabDanhSachDangKy";
-            this.tabDanhSachDangKy.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDanhSachDangKy.Size = new System.Drawing.Size(819, 405);
-            this.tabDanhSachDangKy.TabIndex = 0;
-            this.tabDanhSachDangKy.Text = "Danh sách đăng ký";
-            this.tabDanhSachDangKy.UseVisualStyleBackColor = true;
-            // 
-            // tabLichSu
-            // 
-            this.tabLichSu.Controls.Add(this.lvLichSu);
-            this.tabLichSu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabLichSu.Location = new System.Drawing.Point(4, 29);
-            this.tabLichSu.Name = "tabLichSu";
-            this.tabLichSu.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLichSu.Size = new System.Drawing.Size(819, 399);
-            this.tabLichSu.TabIndex = 1;
-            this.tabLichSu.Text = "Lịch sử";
-            this.tabLichSu.UseVisualStyleBackColor = true;
-            // 
-            // lvLichSu
-            // 
-            this.lvLichSu.Alignment = System.Windows.Forms.ListViewAlignment.Default;
-            this.lvLichSu.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colHeader});
-            this.lvLichSu.HideSelection = false;
-            this.lvLichSu.Location = new System.Drawing.Point(6, 6);
-            this.lvLichSu.Name = "lvLichSu";
-            this.lvLichSu.Size = new System.Drawing.Size(807, 394);
-            this.lvLichSu.TabIndex = 15;
-            this.lvLichSu.UseCompatibleStateImageBehavior = false;
-            this.lvLichSu.View = System.Windows.Forms.View.Details;
-            // 
-            // colHeader
-            // 
-            this.colHeader.Text = "Chi tiết";
-            this.colHeader.Width = 799;
-            // 
-            // lvDanhSachDangKy
-            // 
-            this.lvDanhSachDangKy.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-            this.lvDanhSachDangKy.HideSelection = false;
-            this.lvDanhSachDangKy.Location = new System.Drawing.Point(4, 7);
-            this.lvDanhSachDangKy.Name = "lvDanhSachDangKy";
-            this.lvDanhSachDangKy.Size = new System.Drawing.Size(809, 392);
-            this.lvDanhSachDangKy.TabIndex = 0;
-            this.lvDanhSachDangKy.UseCompatibleStateImageBehavior = false;
-            this.lvDanhSachDangKy.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Danh sách đăng ký";
-            this.columnHeader1.Width = 803;
-            // 
             // FrmAICListener
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,10 +251,10 @@ namespace AICListener
             this.Load += new System.EventHandler(this.FrmAICListener_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabListener.ResumeLayout(false);
             this.tabDanhSachDangKy.ResumeLayout(false);
             this.tabLichSu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

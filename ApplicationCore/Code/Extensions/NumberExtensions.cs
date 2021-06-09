@@ -8,20 +8,12 @@ namespace ApplicationCore.Code.Extensions
 {
     public static class NumberExtensions
     {
-        public static int GetNewRandom(int oldNumber)
+        public static int GetNumberRandom(int maxValue)
         {
-            var random = new Random();
-            var randomGhe = random.Next(1, 1000);
+            Random rnd = new Random(DateTime.Now.Millisecond);
+            int random_number = rnd.Next(maxValue);
 
-            if (randomGhe != oldNumber)
-            {
-                return randomGhe;
-            }
-            else
-            {
-                return GetNewRandom(oldNumber);
-            }
-
+            return random_number;
         }
     }
 }

@@ -36,8 +36,10 @@ namespace AICListener
 
         private async void btnKetNoi_Click(object sender, EventArgs e)
         {
+            lblTrangThai.Text = ClientStatus.DangKetNoi.ToDisplayName();
+
             _signalRConnection = new HubConnection(txtServerAIC.Text);
-            _signalRConnection.StateChanged += HubConnection_StateChanged;
+            //_signalRConnection.StateChanged += HubConnection_StateChanged;
 
             _hubProxy = _signalRConnection.CreateHubProxy("ServerHub");
 
@@ -65,13 +67,14 @@ namespace AICListener
 
                 SettingsExtensions.SetValue(txtServerAIC.Text);
                 _log.Info($"Connected {txtServerAIC.Text}");
+                lblTrangThai.Text = ClientStatus.DaKetNoi.ToDisplayName();
             }
             catch (Exception ex)
             {
-                //lblTrangThai.Text = "Lỗi kết nối";
                 btnKetNoi.Enabled = true;
                 txtServerAIC.Enabled = true;
                 _log.Error($"{ex.Message}");
+                lblTrangThai.Text = ClientStatus.LoiKetNoi.ToDisplayName();
             }
         }
 
@@ -107,9 +110,8 @@ namespace AICListener
                 txtServerAIC.Enabled = true;
                 btnHuy.Enabled = false;
 
-                //lblTrangThai.Text = "Chờ kết nối";
-
                 _log.Info($"Disconnected");
+                lblTrangThai.Text = ClientStatus.ChoKetNoi.ToDisplayName();
             }
         }
 
@@ -120,18 +122,30 @@ namespace AICListener
                 this.BeginInvoke(new Action(() =>
                 {
                     temp_writeToLog(log, trangthai, soGhe);
+                    autoScollLog();
                 }));
             }
             else
             {
                 temp_writeToLog(log, trangthai, soGhe);
+                autoScollLog();
             }
 
-            lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
-            lvLichSu.Update();
+        }
 
-            lvDanhSachDangKy.EnsureVisible(lvDanhSachDangKy.Items.Count - 1);
-            lvDanhSachDangKy.Update();
+        private void autoScollLog()
+        {
+            if (lvLichSu.Items.Count >= 2)
+            {
+                lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
+                lvLichSu.Update();
+            }
+
+            if (lvDanhSachDangKy.Items.Count >= 2)
+            {
+                lvDanhSachDangKy.EnsureVisible(lvDanhSachDangKy.Items.Count - 1);
+                lvDanhSachDangKy.Update();
+            }
         }
 
         private void temp_writeToLog(string log, LoaiTrangThai trangthai, string soGhe)
@@ -164,6 +178,7 @@ namespace AICListener
         private void FrmAICListener_Load(object sender, EventArgs e)
         {
             txtServerAIC.Text = SettingsExtensions.GetValue("AICServerName");
+            lblTrangThai.Text = ClientStatus.ChoKetNoi.ToDisplayName();
             btnXuatExcel.Hide();
             txtSearch.Hide();
         }

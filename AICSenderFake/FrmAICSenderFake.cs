@@ -32,8 +32,10 @@ namespace AICSenderFake
 
         private async void btnKetNoi_Click(object sender, EventArgs e)
         {
+            lblTrangThai.Text = ClientStatus.DangKetNoi.ToDisplayName();
+
             _signalRConnection = new HubConnection(txtServerAIC.Text);
-            _signalRConnection.StateChanged += HubConnection_StateChanged;
+            //_signalRConnection.StateChanged += HubConnection_StateChanged;
 
             _hubProxy = _signalRConnection.CreateHubProxy("ServerHub");
 
@@ -56,12 +58,14 @@ namespace AICSenderFake
 
                 SettingsExtensions.SetValue(txtServerAIC.Text);
                 _log.Info($"Connected {txtServerAIC.Text}");
+                lblTrangThai.Text = ClientStatus.DaKetNoi.ToDisplayName();
             }
             catch (Exception ex)
             {
                 btnKetNoi.Enabled = true;
                 txtServerAIC.Enabled = true;
                 _log.Error($"{ex.Message}");
+                lblTrangThai.Text = ClientStatus.LoiKetNoi.ToDisplayName();
             }
         }
 
@@ -100,6 +104,7 @@ namespace AICSenderFake
                 grpSend.Enabled = false;
 
                 _log.Info($"Disconnected");
+                lblTrangThai.Text = ClientStatus.ChoKetNoi.ToDisplayName();
             }
         }
 
@@ -169,9 +174,7 @@ namespace AICSenderFake
                         }
                     }
 
-                    var randGheNumber = NumberExtensions.GetNewRandom(oldNumber);
-                    oldNumber = randGheNumber;
-
+                    var randGheNumber = NumberExtensions.GetNumberRandom(30);
                     var gheTemp = randGheNumber % 30;
                     if (gheTemp == 0)
                     {
@@ -201,6 +204,7 @@ namespace AICSenderFake
         private void FrmAICSenderFake_Load(object sender, EventArgs e)
         {
             txtServerAIC.Text = SettingsExtensions.GetValue("AICServerName");
+            lblTrangThai.Text = ClientStatus.ChoKetNoi.ToDisplayName();
         }
     }
 }
