@@ -155,16 +155,13 @@ namespace AICListener
 
             if (trangthai == LoaiTrangThai.DangKy)
             {
-                if (!_danhSachDangKys.Contains(soGhe))
-                {
-                    _danhSachDangKys.Add(soGhe);
-                }
+                _danhSachDangKys.Add(soGhe);
             }
             else if (trangthai == LoaiTrangThai.Huy)
             {
                 if (_danhSachDangKys.Contains(soGhe))
                 {
-                    _danhSachDangKys.Remove(soGhe);
+                    _danhSachDangKys.RemoveAll(m => m == soGhe);
                 }
             }
 
@@ -274,9 +271,25 @@ namespace AICListener
         {
             RemoveAllDanhSachDangKy();
 
+            var tempDS = new List<string>();
+
             foreach (var item in _danhSachDangKys)
             {
-                string[] row = { $"{item} - {LoaiTrangThai.DangKy.ToDisplayName()}" };
+                var quantityItemInTemp = tempDS.Where(m => m == item).Count();
+
+                var itemDisplay = "";
+                if (quantityItemInTemp == 0)
+                {
+                    itemDisplay = $"{item} - {LoaiTrangThai.DangKy.ToDisplayName()}";
+                }
+                else
+                {
+                    itemDisplay = $"{item} - {LoaiTrangThai.DangKy.ToDisplayName()} lần {quantityItemInTemp + 1}";
+                }
+
+                tempDS.Add(item);
+
+                string[] row = { $"{itemDisplay}" };
                 var listViewItem = new ListViewItem(row);
                 lvDanhSachDangKy.Items.Add(listViewItem);
             }
