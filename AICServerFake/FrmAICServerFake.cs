@@ -122,28 +122,26 @@ namespace AICServerFake
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    var logDisplay = $"{DateTime.Now} - {log}";
-                    _serverLogs.Add(logDisplay);
-
-                    string[] row = { logDisplay };
-                    var listViewItem = new ListViewItem(row);
-                    lvLichSu.Items.Add(listViewItem);
-                    lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
-                    lvLichSu.Update();
+                    AddLog(log);
                 }));
             }
             else
             {
-                var logDisplay = $"{DateTime.Now} - {log}";
-                _serverLogs.Add(logDisplay);
-
-                string[] row = { logDisplay };
-                var listViewItem = new ListViewItem(row);
-                lvLichSu.Items.Add(listViewItem);
-                lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
-                lvLichSu.Update();
+                AddLog(log);
             }
 
+        }
+
+        private void AddLog(string log)
+        {
+            var logDisplay = $"{DateTime.Now} - {log}";
+            _serverLogs.Add(logDisplay);
+
+            string[] row = { logDisplay };
+            var listViewItem = new ListViewItem(row);
+            lvLichSu.Items.Add(listViewItem);
+            lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
+            lvLichSu.Update();
         }
 
         private void btnDung_Click(object sender, EventArgs e)

@@ -45,6 +45,7 @@
     <Compile Include="Code\Extensions\EnumExtensions.cs" />
     <Compile Include="Code\Extensions\NumberExtensions.cs" />
     <Compile Include="Code\Helpers\StringHelper.cs" />
+    <Compile Include="Models\LichSuModel.cs" />
     <Compile Include="Models\ObjMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
