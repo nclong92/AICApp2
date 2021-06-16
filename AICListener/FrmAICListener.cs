@@ -21,8 +21,8 @@ namespace AICListener
         HubConnection _signalRConnection;
         IHubProxy _hubProxy;
 
-        static List<string> _serverLogs = new List<string>();
-        static List<string> _danhSachDangKys = new List<string>();
+        //static List<string> _serverLogs = new List<string>();
+        //static List<string> _danhSachDangKys = new List<string>();
 
         public log4net.ILog _log;
 
@@ -151,25 +151,28 @@ namespace AICListener
         private void temp_writeToLog(string log, LoaiTrangThai trangthai, string soGhe)
         {
             var logDisplay = $"{DateTime.Now} - {log}";
-            _serverLogs.Add(logDisplay);
+            //_serverLogs.Add(logDisplay);
+            LichSuModel.Instance.AddMessage(logDisplay);
+            DanhSachDangKyModel.Instance.AddMessage(log, trangthai, soGhe);
 
-            if (trangthai == LoaiTrangThai.DangKy)
-            {
-                _danhSachDangKys.Add(soGhe);
-            }
-            else if (trangthai == LoaiTrangThai.Huy)
-            {
-                if (_danhSachDangKys.Contains(soGhe))
-                {
-                    _danhSachDangKys.RemoveAll(m => m == soGhe);
-                }
-            }
+            //if (trangthai == LoaiTrangThai.DangKy)
+            //{
+            //    _danhSachDangKys.Add(soGhe);
+            //}
+            //else if (trangthai == LoaiTrangThai.Huy)
+            //{
+            //    if (_danhSachDangKys.Contains(soGhe))
+            //    {
+            //        _danhSachDangKys.RemoveAll(m => m == soGhe);
+            //    }
+            //}
 
             RefreshAllDanhSachDangKy();
 
             string[] row = { logDisplay };
             var listViewItem = new ListViewItem(row);
             lvLichSu.Items.Add(listViewItem);
+            //RefreshAllLog();
         }
 
         private void FrmAICListener_Load(object sender, EventArgs e)
@@ -225,7 +228,8 @@ namespace AICListener
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
-                foreach (var item in _serverLogs)
+                //foreach (var item in _serverLogs)
+                foreach (var item in LichSuModel.Instance.GetList)
                 {
                     if (item.ToLower().Contains($"- {txtSearch.Text.ToLower()}"))
                     {
@@ -251,7 +255,8 @@ namespace AICListener
         {
             RemoveAllLog();
 
-            foreach (var item in _serverLogs)
+            //foreach (var item in _serverLogs)
+            foreach (var item in LichSuModel.Instance.GetList)
             {
                 string[] row = { item };
                 var listViewItem = new ListViewItem(row);
@@ -273,7 +278,8 @@ namespace AICListener
 
             var tempDS = new List<string>();
 
-            foreach (var item in _danhSachDangKys)
+            //foreach (var item in _danhSachDangKys)
+            foreach (var item in DanhSachDangKyModel.Instance.GetList)
             {
                 var quantityItemInTemp = tempDS.Where(m => m == item).Count();
 

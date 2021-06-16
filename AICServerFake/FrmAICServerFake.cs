@@ -19,7 +19,7 @@ namespace AICServerFake
         private IDisposable _signalR;
         private BindingList<ClientItem> _clients = new BindingList<ClientItem>();
 
-        static List<string> _serverLogs = new List<string>();
+        //static List<string> _serverLogs = new List<string>();
 
         public log4net.ILog _log;
 
@@ -123,20 +123,50 @@ namespace AICServerFake
                 this.BeginInvoke(new Action(() =>
                 {
                     AddLog(log);
+                    autoScroll();
                 }));
             }
             else
             {
                 AddLog(log);
+                autoScroll();
             }
 
+        }
+
+        private void RemoveAllLog()
+        {
+            foreach (ListViewItem item in lvLichSu.Items)
+            {
+                lvLichSu.Items.Remove(item);
+            }
+        }
+
+        private void RefreshAllLog()
+        {
+            RemoveAllLog();
+
+            //foreach (var item in _serverLogs)
+            foreach (var item in LichSuModel.Instance.GetList)
+            {
+                string[] row = { item };
+                var listViewItem = new ListViewItem(row);
+                lvLichSu.Items.Add(listViewItem);
+            }
+        }
+
+        private void autoScroll()
+        {
+            lvLichSu.EnsureVisible(lvLichSu.Items.Count - 1);
+            lvLichSu.Update();
         }
 
         private void AddLog(string log)
         {
             var logDisplay = $"{DateTime.Now} - {log}";
-            _serverLogs.Add(logDisplay);
-
+            //_serverLogs.Add(logDisplay);
+            LichSuModel.Instance.AddMessage(logDisplay);
+            
             string[] row = { logDisplay };
             var listViewItem = new ListViewItem(row);
             lvLichSu.Items.Add(listViewItem);

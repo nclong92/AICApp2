@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Models
 {
-    public class LichSuModel
+    public sealed class LichSuModel
     {
-        public LichSuModel(string message)
-        {
-            Message = message;
-        }
+        private LichSuModel() { }
 
-        public string Message { get; set; }
+        static readonly LichSuModel LICHSU_DANGKY = new LichSuModel();
 
-        public static List<LichSuModel> GetList(IEnumerable<string> messages)
-        {
-            return messages.Select(m => new LichSuModel(m)).ToList();
-        }
+        public static LichSuModel Instance => LICHSU_DANGKY;
+
+        private List<string> _messageReceived = new List<string>();
+
+        public void AddMessage(string message) => _messageReceived.Add(message);
+
+        public List<string> GetList => _messageReceived;
+        
     }
 }
