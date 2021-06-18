@@ -19,8 +19,6 @@ namespace AICServerFake
         private IDisposable _signalR;
         private BindingList<ClientItem> _clients = new BindingList<ClientItem>();
 
-        //static List<string> _serverLogs = new List<string>();
-
         public log4net.ILog _log;
 
         public FrmAICServerFake()
@@ -146,10 +144,10 @@ namespace AICServerFake
         {
             RemoveAllLog();
 
-            //foreach (var item in _serverLogs)
             foreach (var item in LichSuModel.Instance.GetList)
             {
-                string[] row = { item };
+                var str = $"{item.SendTime} - {item.Position} - {item.Status.ToDisplayName()}";
+                string[] row = { str };
                 var listViewItem = new ListViewItem(row);
                 lvLichSu.Items.Add(listViewItem);
             }
@@ -164,8 +162,7 @@ namespace AICServerFake
         private void AddLog(string log)
         {
             var logDisplay = $"{DateTime.Now} - {log}";
-            //_serverLogs.Add(logDisplay);
-            LichSuModel.Instance.AddMessage(logDisplay);
+            //LichSuModel.Instance.AddCommand(new AicCommandModel());
             
             string[] row = { logDisplay };
             var listViewItem = new ListViewItem(row);

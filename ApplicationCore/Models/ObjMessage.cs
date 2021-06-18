@@ -11,17 +11,7 @@ namespace ApplicationCore.Models
     {
         public string AICSenderFake { get; set; }
         public string SoGhe { get; set; }
-        public LoaiTrangThai TrangThai { get; set; }
-    }
-
-    public enum LoaiTrangThai
-    {
-        [Display(Name = "Đăng ký")]
-        DangKy = 0,
-        [Display(Name = "Hủy")]
-        Huy = 1,
-        [Display(Name = "Ngẫu nhiên")]
-        NgauNhien = 3
+        public AicCommandStatus TrangThai { get; set; }
     }
 
     public enum ClientStatus

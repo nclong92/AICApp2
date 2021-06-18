@@ -16,17 +16,21 @@ namespace ApplicationCore.Models
 
         private List<string> _danhSachDangKys = new List<string>();
 
-        public void AddMessage(string message, LoaiTrangThai trangthai, string soGhe)
+        public void AddMessage(string message, AicCommandStatus trangthai, string soGhe)
         {
-            if (trangthai == LoaiTrangThai.DangKy)
+            if (trangthai == AicCommandStatus.DangKy)
             {
-                _danhSachDangKys.Add(soGhe);
+                if (!_danhSachDangKys.Contains(soGhe))
+                {
+                    _danhSachDangKys.Add(soGhe);
+                }
             }
-            else if (trangthai == LoaiTrangThai.Huy)
+            else if (trangthai == AicCommandStatus.Huy)
             {
                 if (_danhSachDangKys.Contains(soGhe))
                 {
-                    _danhSachDangKys.RemoveAll(m => m == soGhe);
+                    //_danhSachDangKys.RemoveAll(m => m == soGhe);
+                    _danhSachDangKys.Remove(soGhe);
                 }
             }
         }

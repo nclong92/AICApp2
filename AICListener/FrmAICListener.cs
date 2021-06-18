@@ -21,9 +21,6 @@ namespace AICListener
         HubConnection _signalRConnection;
         IHubProxy _hubProxy;
 
-        //static List<string> _serverLogs = new List<string>();
-        //static List<string> _danhSachDangKys = new List<string>();
-
         public log4net.ILog _log;
 
         public FrmAICListener()
@@ -39,11 +36,7 @@ namespace AICListener
             lblTrangThai.Text = ClientStatus.DangKetNoi.ToDisplayName();
 
             _signalRConnection = new HubConnection(txtServerAIC.Text);
-            //_signalRConnection.StateChanged += HubConnection_StateChanged;
-
             _hubProxy = _signalRConnection.CreateHubProxy("ServerHub");
-
-            //await _hubProxy.Invoke("SendObj", new ObjMessage() { });
 
             _hubProxy.On<string, ObjMessage>("AddObjMessage", (name, objmessage) =>
             {
@@ -78,26 +71,6 @@ namespace AICListener
             }
         }
 
-        private void HubConnection_StateChanged(StateChange obj)
-        {
-            if (obj.NewState == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
-            {
-                lblTrangThai.Text = "Đã kết nối";
-            }
-            else if (obj.NewState == Microsoft.AspNet.SignalR.Client.ConnectionState.Disconnected)
-            {
-                lblTrangThai.Text = "Chờ kết nối";
-            }
-            else if (obj.NewState == Microsoft.AspNet.SignalR.Client.ConnectionState.Connecting)
-            {
-                lblTrangThai.Text = "Đang kết nối";
-            }
-            //else
-            //{
-            //    lblTrangThai.Text = "Lỗi kết nối";
-            //}
-        }
-
         private void btnHuy_Click(object sender, EventArgs e)
         {
             if (_signalRConnection != null)
@@ -115,7 +88,7 @@ namespace AICListener
             }
         }
 
-        private void writeToLog(string log, LoaiTrangThai trangthai, string soGhe)
+        private void writeToLog(string log, AicCommandStatus trangthai, string soGhe)
         {
             if (this.InvokeRequired)
             {
@@ -148,31 +121,17 @@ namespace AICListener
             }
         }
 
-        private void temp_writeToLog(string log, LoaiTrangThai trangthai, string soGhe)
+        private void temp_writeToLog(string log, AicCommandStatus trangthai, string soGhe)
         {
             var logDisplay = $"{DateTime.Now} - {log}";
-            //_serverLogs.Add(logDisplay);
-            LichSuModel.Instance.AddMessage(logDisplay);
+            LichSuModel.Instance.AddCommand(new AicCommandModel(soGhe, trangthai, DateTime.Now));
             DanhSachDangKyModel.Instance.AddMessage(log, trangthai, soGhe);
-
-            //if (trangthai == LoaiTrangThai.DangKy)
-            //{
-            //    _danhSachDangKys.Add(soGhe);
-            //}
-            //else if (trangthai == LoaiTrangThai.Huy)
-            //{
-            //    if (_danhSachDangKys.Contains(soGhe))
-            //    {
-            //        _danhSachDangKys.RemoveAll(m => m == soGhe);
-            //    }
-            //}
 
             RefreshAllDanhSachDangKy();
 
             string[] row = { logDisplay };
             var listViewItem = new ListViewItem(row);
             lvLichSu.Items.Add(listViewItem);
-            //RefreshAllLog();
         }
 
         private void FrmAICListener_Load(object sender, EventArgs e)
@@ -216,10 +175,6 @@ namespace AICListener
 
             var filePath = $"{subPath}\\{excelName}";
             wb.SaveAs(filePath);
-            //wb.Close();
-            //app.Quit();
-
-            //MessageBox.Show($"Tạo file excel thành công. Bạn có thể tìm tệp theo đường dẫn: {filePath}");
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -228,12 +183,12 @@ namespace AICListener
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
-                //foreach (var item in _serverLogs)
                 foreach (var item in LichSuModel.Instance.GetList)
                 {
-                    if (item.ToLower().Contains($"- {txtSearch.Text.ToLower()}"))
+                    if (item.Position.ToLower().Contains($"{txtSearch.Text.ToLower()}"))
                     {
-                        lvLichSu.Items.Add(item);
+                        var str = $"{item.SendTime} - {item.Position} - {item.Status.ToDisplayName()}";
+                        lvLichSu.Items.Add(str);
                     }
                 }
             }
@@ -255,10 +210,10 @@ namespace AICListener
         {
             RemoveAllLog();
 
-            //foreach (var item in _serverLogs)
             foreach (var item in LichSuModel.Instance.GetList)
             {
-                string[] row = { item };
+                var str = $"{item.SendTime} - {item.Position} - {item.Status.ToDisplayName()}";
+                string[] row = { str };
                 var listViewItem = new ListViewItem(row);
                 lvLichSu.Items.Add(listViewItem);
             }
@@ -278,7 +233,6 @@ namespace AICListener
 
             var tempDS = new List<string>();
 
-            //foreach (var item in _danhSachDangKys)
             foreach (var item in DanhSachDangKyModel.Instance.GetList)
             {
                 var quantityItemInTemp = tempDS.Where(m => m == item).Count();
@@ -286,11 +240,11 @@ namespace AICListener
                 var itemDisplay = "";
                 if (quantityItemInTemp == 0)
                 {
-                    itemDisplay = $"{item} - {LoaiTrangThai.DangKy.ToDisplayName()}";
+                    itemDisplay = $"{item} - {AicCommandStatus.DangKy.ToDisplayName()}";
                 }
                 else
                 {
-                    itemDisplay = $"{item} - {LoaiTrangThai.DangKy.ToDisplayName()} lần {quantityItemInTemp + 1}";
+                    itemDisplay = $"{item} - {AicCommandStatus.DangKy.ToDisplayName()} lần {GetCountSpeecher(item)}";
                 }
 
                 tempDS.Add(item);
@@ -299,6 +253,41 @@ namespace AICListener
                 var listViewItem = new ListViewItem(row);
                 lvDanhSachDangKy.Items.Add(listViewItem);
             }
+        }
+
+        private int GetCountSpeecher(string ghe)
+        {
+            var count = 0;
+            lock (DanhSachDangKyModel.Instance.GetList)
+            {
+
+                var list = LichSuModel.Instance.GetList.Where(m => m.Position == ghe).ToList();
+
+                var tmp = 0;
+                foreach (var item in list)
+                {
+                    if (item.Status == AicCommandStatus.DangKy)
+                    {
+                        tmp = 1;
+
+                    }
+                    else
+                    {
+                        if (tmp == 1)
+                        {
+                            count++;
+                            tmp = 0;
+                        }
+                    }
+
+
+                }
+                if (tmp == 1)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         private void tabListener_SelectedIndexChanged(object sender, EventArgs e)

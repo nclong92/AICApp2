@@ -111,7 +111,7 @@ namespace AICSenderFake
         private void btn1Gui_Click(object sender, EventArgs e)
         {
             lbl1ThongBao.Text = "";
-            var trangThai = rd1DangKy.Checked ? LoaiTrangThai.DangKy : (rd1Huy.Checked ? LoaiTrangThai.Huy : LoaiTrangThai.DangKy);
+            var trangThai = rd1DangKy.Checked ? AicCommandStatus.DangKy : (rd1Huy.Checked ? AicCommandStatus.Huy : AicCommandStatus.DangKy);
             var soGhe = txtGhe.Text;
 
             if (string.IsNullOrEmpty(soGhe))
@@ -135,6 +135,8 @@ namespace AICSenderFake
             }
         }
 
+        Random rand = new Random();
+
         private async void btnnGui_Click(object sender, EventArgs e)
         {
             lblnThongBao.Text = "";
@@ -147,44 +149,25 @@ namespace AICSenderFake
             }
             else
             {
-                int oldNumber = -1;
                 for (int i = 1; i <= soLenh; i++)
                 {
-                    var trangthai = LoaiTrangThai.DangKy;
+                    var trangthai = AicCommandStatus.DangKy;
 
                     if (rdnDangKy.Checked)
                     {
-                        trangthai = LoaiTrangThai.DangKy;
+                        trangthai = AicCommandStatus.DangKy;
                     }
                     else if (rdnHuy.Checked)
                     {
-                        trangthai = LoaiTrangThai.Huy;
+                        trangthai = AicCommandStatus.Huy;
                     }
                     else if (rdnNgauNhien.Checked)
                     {
-                        var rand = new Random();
-                        var randNumber = rand.Next(1, 100);
-                        if (randNumber % 2 == 0)
-                        {
-                            trangthai = LoaiTrangThai.DangKy;
-                        }
-                        else
-                        {
-                            trangthai = LoaiTrangThai.Huy;
-                        }
+                        var randNumber = rand.Next(0, 2);
+                        trangthai = (AicCommandStatus)randNumber;
                     }
 
-                    var randGheNumber = NumberExtensions.GetNumberRandom(30);
-                    var gheTemp = randGheNumber % 30;
-                    if (gheTemp == 0)
-                    {
-                        randGheNumber = 30;
-                    }
-                    else
-                    {
-                        randGheNumber = gheTemp;
-                    }
-
+                    var randGheNumber = rand.Next(1, 31);
                     var objMessage = new ObjMessage()
                     {
                         AICSenderFake = "AIC Sender Fake Name",

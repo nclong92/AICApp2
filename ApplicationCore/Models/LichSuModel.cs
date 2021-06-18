@@ -14,11 +14,15 @@ namespace ApplicationCore.Models
 
         public static LichSuModel Instance => LICHSU_DANGKY;
 
-        private List<string> _messageReceived = new List<string>();
+        //private List<string> _messageReceived = new List<string>();
 
-        public void AddMessage(string message) => _messageReceived.Add(message);
+        //public void AddMessage(string message) => _messageReceived.Add(message);
 
-        public List<string> GetList => _messageReceived;
+        //public List<string> GetList => _messageReceived;
+
+        private List<AicCommandModel> _commands = new List<AicCommandModel>();
+        public void AddCommand(AicCommandModel model) => _commands.Add(model);
+        public List<AicCommandModel> GetList => _commands;
         
     }
 }
